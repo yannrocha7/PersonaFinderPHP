@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($senha == $confirmasenha) {
             $sqlLogin = "INSERT INTO login_aluno (cpf, email, senha) VALUES ('$cpf', '$email', '$senha')";
             if ($conn->query($sqlLogin) === TRUE) {
-                echo "Cadastro realizado com sucesso!";
+                header("Location: login_personal.php");
             } else {
                 echo "Erro ao cadastrar login_aluno: " . $conn->error;
             }

@@ -21,12 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipoTreino = $_POST["tipoTreino"];
     $bairrosTreino = $_POST["bairrosTreino"];
     $tipoPagamento = $_POST["tipoPagamento"];
+    $valor = $_POST["valor"];
+    $tipoPagamentoTreino = $_POST["tipoPagamentoTreino"];
     $senha = $_POST["senha"];
     $confirmasenha = $_POST["confirmarSenha"];
     $email = $_POST["email"];
 
     // Inserir os dados do aluno no banco de dados
-    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento')";
+    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento, valor, forma_pagamento_aluno) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento', '$valor', '$tipoPagamentoTreino')";
     if ($conn->query($sqlPersonal) === TRUE) {
         // Obter o CPF gerado automaticamente
         $alunoCpf = $conn->insert_id;
@@ -35,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($senha == $confirmasenha) {
             $sqlLogin = "INSERT INTO login_personal (cpf, email, senha) VALUES ('$cpf', '$email', '$senha')";
             if ($conn->query($sqlLogin) === TRUE) {
-                echo "Cadastro realizado com sucesso!";
+                header("Location: login_personal.php");
             } else {
                 echo "Erro ao cadastrar login_Personal: " . $conn->error;
             }

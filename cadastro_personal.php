@@ -34,6 +34,20 @@
             </div>
 
             <div class="form-group">
+                <label for="tipoPagamento">Tipo de Pagamento do Aluno:</label>
+                <select class="form-control" id="tipoPagamentoTreino" name="tipoPagamentoTreino" required>
+                    <option value="credito">Crédito</option>
+                    <option value="debito">Débito</option>
+                    <option value="debito">PIX</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Valor por treino:</label>
+                <input type="number" class="form-control" id="valor" name="valor" required>
+            </div>
+
+            <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>

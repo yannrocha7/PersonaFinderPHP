@@ -1,9 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cadastro do Aluno</title>
+    <title>Cadastro do Personal</title>
     <link rel="stylesheet" href="style_personal_crud.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgba(26, 188, 156, 1) !important;
+            color: rgba(255, 255, 255);
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            margin-top: 50px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #1a1e21;
+            text-align: -webkit-left;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -59,7 +97,8 @@
                 <label for="confirmarSenha">Confirmar Senha:</label>
                 <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
             </div>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="button" onclick="window.location.href='login_personal.php';" class="btn btn-primary">Voltar</button>
         </form>
     </div>
 </body>

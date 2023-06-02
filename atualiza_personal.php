@@ -15,6 +15,58 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/style_personal_index.css" rel="stylesheet" />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+            }
+
+            .container-form {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .label-form {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: #fff;
+                font-size: 14px;
+                text-decoration: none;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: #45a049;
+            }
+
+            .btn:active {
+                background-color: #3e8e41;
+            }
+        </style>
     </head>
     <?php
             // Start the session
@@ -44,35 +96,16 @@
             }
 
             // Prepare and execute the query to retrieve the personal's name based on their email
-            $sql = "SELECT nome FROM personal WHERE cpf = '$cpf'";
-            $sqlcontratacao = "SELECT * FROM personal_aluno_contratacao WHERE personal_cpf = '$cpf' AND proposta_aceita = 1";
-            $sqlproposta = "SELECT * FROM personal_aluno_contratacao WHERE personal_cpf = '$cpf' AND proposta_aceita = 0";
-            $result = $conn->query($sql);
-            $resultcontratacao = $conn->query($sqlcontratacao);
-            $resultproposta = $conn->query($sqlproposta);
-            $countContatacao = mysqli_num_rows($resultcontratacao);
-            $countProposta = mysqli_num_rows($resultproposta);
+            $sqldadospersonal = "SELECT * FROM personal WHERE cpf = '$cpf'";
+            $resultdadospersonal = $conn->query($sqldadospersonal);
 
-            // Check if the query was successful and fetch the personal's name
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $personalName = $row["nome"];
-            }
-
-            if ($resultcontratacao && $resultcontratacao->num_rows > 0) {
-                $row = $resultcontratacao->fetch_assoc();
-                $id = $row["id"];
-                $alunoCpf = $row["aluno_cpf"];
-                $diasSemana = $row["dias_semana"];
-                $metodoPagamento = $row["metodo_pagamento"];
-            }
-
-            if ($resultproposta && $resultproposta->num_rows > 0) {
-                $row = $resultproposta->fetch_assoc();
-                $id = $row["id"];
-                $alunoCpf = $row["aluno_cpf"];
-                $diasSemana = $row["dias_semana"];
-                $metodoPagamento = $row["metodo_pagamento"];
+            if ($resultdadospersonal && $resultdadospersonal->num_rows > 0) {
+                $row = $resultdadospersonal->fetch_assoc();
+                $personalName = $row['nome'];
+                $tipo_treino = $row['tipo_treino'];
+                $bairros_treino = $row['bairros_treino'];
+                $tipo_pagamento = $row['tipo_pagamento'];
+                $valor = $row['valor'];
             }
 
 
@@ -82,16 +115,16 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="#page-top">Persona Finder</a>
+                <a class="navbar-brand" href="index_personal.php">Persona Finder</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Alunos</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre Nós</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Nos Contate</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_personal.php">Alunos</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_personal.php">Sobre Nós</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_personal.php">Nos Contate</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="atualiza_personal.php">Atualizar dados</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout.php">Sair</a></li>
                     </ul>
@@ -104,7 +137,7 @@
                 <!-- Masthead Avatar Image-->
                 <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
                 <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">Olá <?php echo $personalName; ?></h1>
+                <h1 class="masthead-heading text-uppercase mb-0">Atualização de dados!</h1>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -112,128 +145,36 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">Encontrando a melhor forma de treino para você!</p>
             </div>
         </header>
         <!-- Portfolio Section-->
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Você tem <?php echo $countContatacao; ?> alunos</h2><br>
-                <div class="row justify-content-center">
-                    <div class="col-md-3 text-center">
-                        <?php if ($countContatacao > 0): ?>
-                            <a href="ver_alunos.php" class="btn btn-primary">Ver Alunos</a>
-                        <?php endif; ?>
+        <section class="page-section portfolio">
+            <div class="container-form">
+                <form method="POST" action="alterar_dados_personal.php">
+                    <div class="form-group">
+                        <label class="label-form" for="nome">Nome:</label>
+                        <input type="text" name="nome" id="nome" value="<?php echo $personalName; ?>">
                     </div>
-                </div>
-                <br/>
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Você tem <?php echo $countProposta; ?> propostas</h2><br>
-                <div class="row justify-content-center">          
-                    <div class="col-md-3 text-center">
-                        <?php if ($countProposta > 0): ?>
-                            <a href="ver_propostas.php" class="btn btn-primary">Ver Propostas</a>
-                        <?php endif; ?>
+                    <div class="form-group">
+                        <label class="label-form" for="tipo_treino">Tipo de Treino:</label>
+                        <input type="text" name="tipo_treino" id="tipo_treino" value="<?php echo $tipo_treino; ?>">
                     </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- About Section-->
-        <section class="page-section bg-primary text-white mb-0" id="about">
-            <div class="container">
-                <!-- About Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-white">Sobre Nós</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- About Section Content-->
-                <div class="row">
-                    <div class="col-lg-4 ms-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p></div>
-                    <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>
-                </div>
-                <!-- About Section Button-->
-                <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                        <i class="fas fa-download me-2"></i>
-                        Free Download!
-                    </a>
-                </div>
-            </div>
-        </section>
-        <!-- Contact Section-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Nos Contate</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Form-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Nome Completo</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Nome Obrigatório</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Email</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">O email é Obrigatório</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Este email não é válido.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(11) 90456-7890" data-sb-validations="required" />
-                                <label for="phone">Número do Telefone</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">Número de telefone é Obrigatório.</div>
-                            </div>
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Messagem</label>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A messagem é obrigatória.</div>
-                            </div>
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Enviar</button>
-                        </form>
+                    <div class="form-group">
+                        <label class="label-form" for="bairros_treino">Bairros de Treino:</label>
+                        <input type="text" name="bairros_treino" id="bairros_treino" value="<?php echo $bairros_treino; ?>">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="label-form" for="tipo_pagamento">Tipo de Pagamento:</label>
+                        <input type="text" name="tipo_pagamento" id="tipo_pagamento" value="<?php echo $tipo_pagamento; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="valor">Valor:</label>
+                        <input type="text" name="valor" id="valor" value="<?php echo $valor; ?>">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Alterar" class="btn">
+                    </div>
+                </form>
             </div>
         </section>
         <!-- Footer-->

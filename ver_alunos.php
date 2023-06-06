@@ -60,7 +60,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Personais</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_personal.php">Início</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Ver Alunos</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre Nós</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Nos Contate</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout.php">Sair</a></li>
@@ -105,7 +106,7 @@
                                         </div>
                                         <div class="card-footer">
                                             <a  href="visualizar_aluno_unico.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-success">Visualizar</a>
-                                            <a  href="negar_contrato.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-danger">Encerrar Contrato</a>
+                                            <a  href="negar_contrato.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-danger">Encerrar Contrato</a>                    
                                         </div>
                                     </div>
                                 </div>

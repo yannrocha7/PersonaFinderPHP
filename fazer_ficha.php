@@ -47,9 +47,7 @@
             $sqlaluno = "SELECT * FROM aluno  WHERE cpf = '$alunoCpf'";
             $resultaluno = $conn->query($sqlaluno);
             $sqlficha = "SELECT * FROM ficha_treino WHERE personal_cpf = '$cpf' AND aluno_cpf = '$alunoCpf'";
-            $sqlemail = "SELECT * FROM login_aluno WHERE cpf = '$alunoCpf'";
             $resultficha = $conn->query($sqlficha);
-            $resultemail = $conn->query($sqlemail);
             $countFicha = mysqli_num_rows($resultficha);
             // Check if the query was successful and fetch the personal's name
             if ($resultaluno && $resultaluno->num_rows > 0) {
@@ -57,17 +55,13 @@
                 $AlunoName = $row["nome"];
                 $AlunoCep = $row["CEP"];
             }
-
-            if ($resultemail && $resultemail->num_rows > 0) {
-                $row = $resultemail->fetch_assoc();
-                $AlunoEmail = $row["email"];
-            }
            
+            $conn->close();
              
     ?>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-            <div class="container">   
+            <div class="container">
                 <a class="navbar-brand" href="#page-top">Persona Finder</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -76,7 +70,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_personal.php">Início</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Ver a ficha</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Fazer a ficha</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre Nós</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Nos Contate</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout.php">Sair</a></li>
@@ -91,65 +85,25 @@
           <section class="page-section portfolio" id="portfolio">
             <div class="container">
                 <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Aluno: <?php echo $AlunoName; ?></h2><br>
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"> Fazer ficha do Aluno: <?php echo $AlunoName; ?></h2><br>
 
-                <!-- Cards de Personal Trainers -->
+                <!-- Formulário para adicionar treino -->
                 <div class="row">
-                   <!-- Card do Personal Trainer -->
-                    <div class="col-lg-12 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h4 class="card-title"><?php echo $AlunoName; ?></h4>
-                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $AlunoCep; ?></h6>
-                                 <!-- Exibir treino do aluno -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Ficha do Aluno:</h3>
-                                        <?php
-                                        // Consulta para buscar o treino do aluno
-                                        $sqlFicha = "SELECT * FROM ficha_treino WHERE personal_cpf = '$cpf' AND aluno_cpf = '$alunoCpf'";
-                                        $result = $conn->query($sqlFicha);
-
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                $treino = $row['treino'];
-                                                echo "<h6>" . nl2br($row['treino']) . "</h6>";
-                                            }
-                                        } else {
-                                            echo "Nenhum treino encontrado.";
-                                        }
-
-                                        // Fechar a conexão com o banco de dados
-                                        $conn->close();
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <?php if ($countFicha == 0): ?>
-                                    <a href="fazer_ficha.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-success">Fazer ficha</a>
-                                <?php endif; ?>
-                                <?php if ($countFicha > 0): ?>
-                                    <a href="atualizar_ficha.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-success">Atualizar ficha</a>
-                                    <a href="remover_ficha.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-danger">Deletar</a>
-                                <?php endif; ?>
-                                <a href="ver_alunos.php" class="btn btn-primary">Voltar</a><br/><br/>
-                                <?php if ($countFicha > 0): ?>
-                                    <form action="exportar_treino.php" method="POST">
-                                            <input type="hidden" name="treino" value="<?php echo $treino ?>">
-                                            <input type="hidden" name="email" value="<?php echo $AlunoEmail ?>">
-                                            <input type="hidden" name="name" value="<?php echo $AlunoName ?>">
-                                            <button type="submit" class="btn btn-primary">Exportar ficha do Aluno</button>
-                                    </form>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                    <div class="col-lg-12">
+                        <form action="adicionar_treino.php" method="POST">
+                            <div class="form-group">
+                                <label for="treino">Atualizar Treino/Observações:</label>
+                                <input type="hidden" name="cpfAluno" id="cpfAluno" value="<?php echo $alunoCpf; ?>">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"  id="treino" name="treino" placeholder="Digite o treino" required></textarea>
+                            </div><br/>
+                            <button type="submit" class="btn btn-success">Adicionar</button>
+                            <a href="visualizar_aluno_unico.php?cpfAluno=<?php echo $alunoCpf; ?>" class="btn btn-primary">Voltar</a>
+                        </form>
                     </div>
-                    
                 </div>
-               
             </div>
-        </section>
+          </section>
+
 
         <!-- About Section-->
         <section class="page-section bg-primary text-white mb-0" id="about">

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Personal Finder - Login de Personal</title>
+  <title>Personal Finder</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <style>
+    
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-    }
-    .logo {
-      margin-top: 50px;
+      background-color: rgba(26, 188, 156, 1) !important;
+      color: rgba(255, 255, 255);
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     h1 {
       margin-top: 20px;
@@ -33,14 +39,27 @@
       font-weight: bold;
       color: red;
     }
+
+    .title{
+      font-size: 40px;
+      text-transform: uppercase;
+      color: black;
+      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-weight: 700;
+    }
+
+    .form-group {
+      text-align-last: left;
+    }
+    .cadastro-button {
+      justify-content: space-evenly;
+    }
   </style>
+  <div class="container">
+    <h1 class="title">Personal Finder</h1>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">
-      <img src="logo.png" alt="Logo do Personal Finder">
-      <h1>Personal Finder</h1>
-    </div>
+  
 
     <?php
     session_start();
@@ -96,7 +115,7 @@
     }
     ?>
 
-    <h2>Login Para Personal</h2>
+    <h2>Login para personal</h2>
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
       <div class="form-group">
         <label for="email">Email:</label>
@@ -107,14 +126,12 @@
         <input type="password" class="form-control" name="senha" required>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-      <div class="row buttons">
-        <div class="col">
-          <a href="cadastro_personal.php" class="btn btn-success btn-block">Cadastre como Personal</a>
+      <div class="row cadastro-button">
+        <div class="buttons">
+          <a href="cadastro_personal.php" class="btn btn-success btn-block">Cadastro personal</a>
         </div>
-      </div>
-      <div class="row buttons">
-        <div class="col">
-          <a href="cadastro_aluno.php" class="btn btn-success btn-block">Cadastre como Aluno</a>
+        <div class="buttons">
+          <a href="cadastro_aluno.php" class="btn btn-success btn-block">Cadastro aluno</a>
         </div>
       </div>
       <div class="row buttons">

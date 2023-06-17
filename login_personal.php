@@ -5,18 +5,19 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <style>
-    
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: rgba(26, 188, 156, 1) !important;
-      color: rgba(255, 255, 255);
-      height: 100%;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+
+      body {
+          font-weight: bold;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          background-color: rgba(26, 188, 156, 1) !important;
+          color: #333;
+          height: 100%;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
     h1 {
       margin-top: 20px;
     }
@@ -47,7 +48,15 @@
       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
       font-weight: 700;
     }
-
+      form {
+          color: black;
+          max-width: 400px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
     .form-group {
       text-align-last: left;
     }

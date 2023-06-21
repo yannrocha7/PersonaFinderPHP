@@ -63,10 +63,6 @@
             outline: none;
         }
 
-        .error {
-            color: #ff0000;
-            margin-top: 5px;
-        }
         button {
             margin-top: 5px;
         }
@@ -107,16 +103,14 @@
         }
 
         // Consultar o banco de dados para verificar se o email e senha existem
-        $sql = "SELECT * FROM login_aluno WHERE cpf = '$cpf' AND email = '$email'";
+        $sql = "SELECT * FROM login_personal WHERE cpf = '$cpf' AND email = '$email'";
         $result = $conn->query($sql);
             if ($result !== false && $result->num_rows > 0) {
-                header("Location: altera_senha_aluno.php");
+                $_SESSION['cpf'] = $cpf;
+                header("Location: altera_senha_personal_html.php");
                 exit();
             } else {
-                echo $cpf;
-                echo $email;
-                echo $sql;
-                echo "<p>Email ou senha não existe.</p>";
+                echo "<p>Email ou CPF não existe.</p>";
             }
 
             // Fechar a conexão com o banco de dados
@@ -125,13 +119,13 @@
 
 ?>
 <h2>Esqueci minha senha</h2>
-<form method="post" >
+<form method="post">
     <label for="cpf">CPF:</label>
     <input type="text" id="cpf" name="cpf" oninput="mascaraCPF(this)" maxlength="14" required><br><br>
     <label for="email">E-mail:</label>
     <input type="email" id="email" name="email" onblur="validarEmail(this.value)" required><br><br>
     <input type="submit" value="Recuperar Senha">
-    <button type="button" onclick="window.location.href='login_aluno.php';" class="btn btn-primary btn-block">Voltar</button>
+    <button type="button" onclick="window.location.href='login_personal.php';" class="btn btn-primary btn-block">Voltar</button>
 </form>
 </body>
 </html>

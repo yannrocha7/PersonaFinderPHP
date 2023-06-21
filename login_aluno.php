@@ -162,7 +162,7 @@
       </div>
       <div class="row buttons">
         <div class="col">
-            <a href="esqueci_senha.php" class="btn btn-success btn-block">Recuperar senha</a>
+            <a href="esqueci_senha_aluno.php" class="btn btn-success btn-block">Recuperar senha</a>
         </div>
       </div>
     </form>

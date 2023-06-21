@@ -160,6 +160,11 @@
           <a href="login_aluno.php" class="btn btn-secondary btn-block">É Aluno? Logue como Aluno</a>
         </div>
       </div>
+      <div class="row buttons">
+        <div class="col">
+            <a href="esqueci_senha_personal.php" class="btn btn-success btn-block">Recuperar senha</a>
+        </div>
+      </div>
     </form>
   </div>
 </body>

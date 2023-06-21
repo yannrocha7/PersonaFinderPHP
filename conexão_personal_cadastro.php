@@ -26,9 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST["senha"];
     $confirmasenha = $_POST["confirmarSenha"];
     $email = $_POST["email"];
+    $telefone = $_POST["telefone"];
 
     // Inserir os dados do aluno no banco de dados
-    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento, valor, forma_pagamento_aluno) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento', '$valor', '$tipoPagamentoTreino')";
+    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento, valor, forma_pagamento_aluno, telefone) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento', '$valor', '$tipoPagamentoTreino','$telefone')";
     if ($conn->query($sqlPersonal) === TRUE) {
         // Obter o CPF gerado automaticamente
         $alunoCpf = $conn->insert_id;
@@ -37,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($senha == $confirmasenha) {
             $sqlLogin = "INSERT INTO login_personal (cpf, email, senha) VALUES ('$cpf', '$email', '$senha')";
             if ($conn->query($sqlLogin) === TRUE) {
-                header("Location: login_personal.php");
+                header("Location: login_personal.php?success=1");
             } else {
-                echo "Erro ao cadastrar login_Personal: " . $conn->error;
+                header("Location: login_personal.php?error=1&message=" . urlencode("Erro ao cadastrar: " . $conn->error));
             }
         } else {
             echo "Erro ao cadastrar: as senhas não coincidem.";

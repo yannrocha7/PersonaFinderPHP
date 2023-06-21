@@ -116,6 +116,18 @@
     ?>
 
     <h2>Login para personal</h2>
+    <?php 
+     // Verificar se há uma mensagem de sucesso
+      if (isset($_GET['success']) && $_GET['success'] == 1) {
+        echo '<h4 class="flash-message success">Cadastro realizado com sucesso!</h4>';
+      }
+
+      // Verificar se há uma mensagem de erro
+      if (isset($_GET['error']) && $_GET['error'] == 1) {
+        $errorMessage = isset($_GET['message']) ? urldecode($_GET['message']) : 'Erro desconhecido';
+        echo '<div class="flash-message error">' . $errorMessage . '</div>';
+      }
+    ?>
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
       <div class="form-group">
         <label for="email">Email:</label>

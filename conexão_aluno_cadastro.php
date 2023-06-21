@@ -22,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST["senha"];
     $confirmasenha = $_POST["confirmarSenha"];
     $email = $_POST["email"];
+    $telefone = $_POST["telefone"];
 
     // Inserir os dados do aluno no banco de dados
-    $sqlAluno = "INSERT INTO aluno (cpf, nome, CEP) VALUES ('$cpf', '$nome', '$cep')";
+    $sqlAluno = "INSERT INTO aluno (cpf, nome, CEP, telefone) VALUES ('$cpf', '$nome', '$cep', '$telefone')";
     if ($conn->query($sqlAluno) === TRUE) {
         // Obter o CPF gerado automaticamente
         $alunoCpf = $conn->insert_id;
@@ -33,9 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($senha == $confirmasenha) {
             $sqlLogin = "INSERT INTO login_aluno (cpf, email, senha) VALUES ('$cpf', '$email', '$senha')";
             if ($conn->query($sqlLogin) === TRUE) {
-                header("Location: login_personal.php");
+                // Redirecionar com mensagem de sucesso
+                header("Location: login_aluno.php?success=1");
             } else {
-                echo "Erro ao cadastrar login_aluno: " . $conn->error;
+                // Redirecionar com mensagem de erro
+                header("Location: login_aluno.php?error=1&message=" . urlencode("Erro ao cadastrar: " . $conn->error));
             }
         } else {
             echo "Erro ao cadastrar: as senhas não coincidem.";

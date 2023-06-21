@@ -4,6 +4,20 @@
     <title>Cadastro do Aluno</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script>
+                $(document).ready(function() {
+                    $('#telefone').inputmask('(99) [9]9999-9999', { "placeholder": " " });
+                });
+
+                $(document).ready(function() {
+                    $('#cep').inputmask('99999-999', { "placeholder": " " });
+                });
+                $(document).ready(function() {
+                     $('#cpf').inputmask('999.999.999-99', { "placeholder": " " });
+                });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,6 +73,11 @@
                 <label for="cep">CEP:</label>
                 <input type="text" class="form-control" id="cep" name="cep" required>
             </div>
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" class="form-control" id="telefone" name="telefone" required>
+            </div>
+
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" class="form-control" id="email" name="email" required>

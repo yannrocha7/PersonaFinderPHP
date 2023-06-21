@@ -51,15 +51,58 @@
             $sqlcontratacao = "SELECT * FROM personal_aluno_contratacao WHERE aluno_cpf = '$cpf'";
             $resultcontratacao = $conn->query($sqlcontratacao);
             $countContatacao = mysqli_num_rows($resultcontratacao);
+            $sqlcontratacaoaceita = "SELECT * FROM personal_aluno_contratacao WHERE aluno_cpf = '$cpf' AND proposta_aceita = 1";
+            $resultcontratacaoaceita = $conn->query($sqlcontratacaoaceita);
+            $countContatacaoaceita = mysqli_num_rows($resultcontratacao);
+            $sqlcontratacaopendente = "SELECT * FROM personal_aluno_contratacao WHERE aluno_cpf = '$cpf' AND proposta_aceita = 0";
+            $resultcontratacaopendente= $conn->query($sqlcontratacaopendente);
+            $countContatacaopendente = mysqli_num_rows($resultcontratacaopendente);
+            $sqlficha = "SELECT * FROM ficha_treino WHERE aluno_cpf = '$cpf'";
+            $resultficha = $conn->query($sqlficha);
+            $countFicha = mysqli_num_rows($resultficha);
+            $countPersonal = mysqli_num_rows($resultpersonal);
+            $cpfpersonal = '';
             // Check if the query was successful and fetch the personal's name
+            if ($resultcontratacao && $resultcontratacao->num_rows > 0) {
+                $row = $resultcontratacao->fetch_assoc();
+                $cpfpersonal = $row['personal_cpf'];
+            }
+
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $AlunoName = $row["nome"];
-                $cpfAluno = $row["cpf"];
+                $AlunoEmail = $row["nome"];
+            }
+            if($cpfpersonal != ''){
+                $sqlp = "SELECT * FROM personal WHERE cpf = '$cpfpersonal'";
+                $resultp = $conn->query($sqlp);
+
+                if ($resultp && $resultp->num_rows > 0) {
+                    $row = $resultp->fetch_assoc();
+                    $nomep = $row['nome'];
+                    $telefonep = $row['telefone'];
+                }
+            }
+            
+
+            if ($resultficha && $resultficha->num_rows > 0) {
+                $row = $resultficha->fetch_assoc();
+                
+              
+
+                $sqlpac = "SELECT * FROM personal_aluno_contratacao WHERE personal_cpf = '$cpfpersonal' AND aluno_cpf='$cpf'";
+                $resultpac = $conn->query($sqlpac);
+    
+                if ($resultpac && $resultpac->num_rows > 0) {
+                    $row = $resultpac->fetch_assoc();
+                    $nota = $row['nota'];
+                }
             }
 
+           
+
             // Close the database connection
-            $conn->close();
+            
     ?>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -75,7 +118,7 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">Sobre Nós</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Nos Contate</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="atualiza_aluno.php">Atualizar dados</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout.php">Sair</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout_aluno.php">Sair</a></li>
                     </ul>
                 </div>
             </div>
@@ -101,7 +144,19 @@
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
                 <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Personal Trainers</h2><br>
+                <?php
+                              if ($countContatacaoaceita == 0) {
+                 ?>
+                   <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Personal Trainers</h2><br>
+                <?php
+                              }else{
+                 ?>
+                    <h6 class="page-section-heading text-center text-uppercase text-secondary mb-0">Personal Trainer Contratado: <br/> <br/><?php echo $nomep; ?> </h6><br>
+                    <h6 class="text-center text-uppercase text-secondary mb-0">Telefone: <?php echo $telefonep; ?> </h6><br>
+                 <?php
+                              }
+                 ?>
+                
 
                 <!-- Cards de Personal Trainers -->
                 <div class="row">
@@ -113,10 +168,12 @@
                     while ($row = $resultpersonal->fetch_assoc()) {
                         $cpfPersonal = $row["cpf"];
                         $nomePersonal = $row["nome"];
+                        $medianota = $row["media_nota"];
                         $tipo_treinoPersonal = $row["tipo_treino"];
                         $bairros_treinoPersonal = $row["bairros_treino"];
                         $tipo_pagamentoPersonal = $row["tipo_pagamento"];
                         $valorTreino = $row["valor"];
+                        $telefone = $row["telefone"];
                         $tipo_pagamentoPersonalAluno = $row["forma_pagamento_aluno"];
                 ?>
                         <!-- Card do Personal Trainer -->
@@ -125,6 +182,17 @@
                                 <div class="card-body">
                                     <h4 class="card-title"><?php echo $nomePersonal; ?></h4>
                                     <h6 class="card-subtitle mb-2 text-muted"><?php echo $tipo_treinoPersonal; ?></h6>
+                                    <?php
+                                        if($medianota != -1){
+                                    ?>
+                                        <h6 class="card-text">Nota média do personal: <?php echo $medianota; ?></h6>
+                                    <?php 
+                                        }else{
+                                    ?>
+                                        <h6 class="card-text">Novo na Plataforma</h6>
+                                   <?php 
+                                        }
+                                    ?>
                                     <p class="card-text"><?php echo $bairros_treinoPersonal; ?></p>
                                     <p class="card-text">R$<?php echo $valorTreino; ?> por treino</p>
                                 </div>
@@ -138,13 +206,87 @@
                                 }
                             } else {
                         ?>
+                        <?php
+                              if ($countContatacaopendente > 0) {
+                        ?>
                                <div class="text-center">
                                     <h2>Proposta Enviada, esperando resposta do Personal</h2>
                                </div>
+                        <?php 
+                              }
+                              else if($countContatacaoaceita > 0){
+                                $sqlficha = "SELECT * FROM ficha_treino WHERE aluno_cpf = '$cpf'";
+                                $resultficha = $conn->query($sqlficha);
+                                if ($resultficha && $resultficha->num_rows > 0) {
+                                    $row = $resultficha->fetch_assoc();  
+                                    $treino = $row['treino'];
+                                }
+                                if (isset($row['treino']) == "") {
+                                    echo "<div class='row justify-content-md-center'>";
+                                    echo "<div class='col-md-2'>";
+                                    echo "</div>";
+                                    echo "<div class='col-md-6'>";
+                                    echo "<h6>Ficha de treino vazia</h6>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                } else {
+                                    echo "<div class='row justify-content-md-center'>";
+                                    echo "<div class='col-md-2'>";
+                                    echo "</div>";
+                                    echo "<div class='col-md-6'>";
+                                    echo "<h2>FICHA:</h2>";
+                                    echo "<h6>" . nl2br($row['treino']) . "</h6>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
+                               
+                                
+                              }
+                        ?>
                         <?php      
                             }
+                            $conn->close();
                         ?>
-
+                        <br/>
+                        <?php
+                              if ($countFicha > 0) {
+                        ?>
+                        <div class='row justify-content-md-center'>
+                            <div class='col-md-2'></div>
+                            <div class='col-md-6'>
+                                <form action="exportar_treino.php" method="POST">
+                                    <input type="hidden" name="treino" value="<?php echo nl2br($treino) ?>">
+                                    <input type="hidden" name="email" value="<?php echo $AlunoEmail ?>">
+                                    <input type="hidden" name="name" value="<?php echo $AlunoName ?>">
+                                    <button type="submit" class="btn btn-primary">Exportar ficha</button>
+                                </form><br/>
+                                <?php
+                                    if (!isset($nota)) {
+                                ?>
+                                <form action="nota_personal.php" method="POST">                                  
+                                    <input type="hidden" name="cpfpersonal" value="<?php echo $cpfpersonal ?>">
+                                    <h6>Dê nota Ao personal (De 0 a 5)</h6>
+                                    <input type="number" name="nota" id="nota" value="0" min="0" max="5" required class="small-input">
+                                    <button type="submit" class="btn btn-primary">salvar nota</button>
+                                </form><br/>
+                                <?php
+                                    }else{
+                                ?>
+                                    <h6 class="masthead-heading text-uppercase mb-0">Nota dada ao personal: <?php echo $nota; ?></h6><br/>
+                                    <form action="excluir_nota_personal.php" method="POST">                                  
+                                        <input type="hidden" name="cpfpersonal" value="<?php echo $cpfpersonal ?>">
+                                        <input type="hidden" name="nota" value="<?php echo $nota ?>">
+                                        <button type="submit" class="btn btn-danger">excluir nota</button>
+                                    </form><br/><br/>
+                                 <?php        
+                                    }
+                                ?>
+                                <a  href="mandar_mensagem.php?telefone=<?php echo $telefonep; ?>" target="_blank" class="btn btn-success">Mande uma mensagem via WhatsApp para seu personal</a><br/><br/>
+                                <a  href="acabar_contrato.php" class="btn btn-danger">Encerrar Contrato</a>                            </div>
+                        </div>
+                        <?php
+                              }
+                        ?>
                 </div>
             </div>
         </section>
@@ -162,14 +304,14 @@
                 </div>
                 <!-- About Section Content-->
                 <div class="row">
-                    <div class="col-lg-4 ms-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p></div>
-                    <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>
+                    <div class="col-lg-4 ms-auto"><p class="lead">Persona Finder é um site inovador que revoluciona a conexão entre personal trainers e entusiastas de fitness, tornando mais fácil do que nunca encontrar a combinação perfeita. Com capacidades avançadas de pesquisa e recursos aprimorados, o Persona Finder oferece uma plataforma perfeita para profissionais e indivíduos se conectarem, garantindo a melhor experiência de treinamento.</p></div>
+                    <div class="col-lg-4 me-auto"><p class="lead">Descubra a forma definitiva de alcançar seus objetivos de fitness com o Persona Finder. Nossa plataforma permite que você explore uma variedade diversificada de treinadores altamente qualificados, tornando fácil encontrar a pessoa certa para suas necessidades de treinamento. Experimente o poder de se conectar com especialistas dedicados a ajudá-lo a atingir novas alturas.</p></div>
                 </div>
                 <!-- About Section Button-->
                 <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                        <i class="fas fa-download me-2"></i>
-                        Free Download!
+                    <a class="btn btn-xl btn-outline-light"  href="mandar_mensagem.php?telefone=+5531997324575" target="_blank">
+                    <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
+                        Entre em contato para parcerias
                     </a>
                 </div>
             </div>

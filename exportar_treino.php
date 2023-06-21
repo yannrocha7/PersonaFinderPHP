@@ -4,26 +4,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['treino']) && isset($_P
     $email = $_POST['email'];
     $name = $_POST['name'];
 
+    // Inclua o arquivo TCPDF
+    require_once('tcpdf/tcpdf.php');
+
+    // Crie uma nova instância do TCPDF
+    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+
+    // Defina o título do documento
+    $pdf->SetTitle('Ficha de Treino');
+
+    // Adicione uma página
+    $pdf->AddPage();
+
+    // Escreva o HTML no PDF
+    $pdf->writeHTML($treino);
+
     // Defina o nome do arquivo de saída
-    $arquivo = "ficha_" . $name . ".txt";
+    $arquivo = "ficha_" . $name . ".pdf";
 
-    // Crie ou abra o arquivo em modo de escrita
-    $handle = fopen($arquivo, "w");
+    // Salve o PDF no arquivo
+    $pdf->Output($arquivo, 'D');
 
-    // Escreva o treino no arquivo
-    fwrite($handle, $treino);
-
-    // Feche o arquivo
-    fclose($handle);
-
-    // Defina o cabeçalho HTTP para forçar o download como arquivo de texto
-    header('Content-Type: text/plain');
-    header('Content-Disposition: attachment; filename="' . $arquivo . '"');
-
-    // Envie o arquivo para o navegador
-    readfile($arquivo);
-
-    // Apague o arquivo depois que ele for enviado
-    unlink($arquivo);
+    // Encerre o script
+    exit();
 }
 ?>

@@ -13,6 +13,14 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+        <script>
+                    $(document).ready(function() {
+                        $('#telefone').inputmask('(99) [9]9999-9999', { "placeholder": " " });
+                    });
+              
+        </script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/style_personal_index.css" rel="stylesheet" />
         <style>
@@ -106,6 +114,7 @@
                 $bairros_treino = $row['bairros_treino'];
                 $tipo_pagamento = $row['tipo_pagamento'];
                 $valor = $row['valor'];
+                $telefone = $row['telefone'];
             }
 
 
@@ -154,6 +163,10 @@
                     <div class="form-group">
                         <label class="label-form" for="nome">Nome:</label>
                         <input type="text" name="nome" id="nome" value="<?php echo $personalName; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="telefone">Telefone:</label>
+                        <input type="tel" class="form-control" name="telefone" id="telefone" value="<?php echo $telefone; ?>">
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="tipo_treino">Tipo de Treino:</label>

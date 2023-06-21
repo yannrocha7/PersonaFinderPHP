@@ -14,6 +14,16 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+        <script>
+                    $(document).ready(function() {
+                        $('#telefone').inputmask('(99) [9]9999-9999', { "placeholder": " " });
+                    });
+                    $(document).ready(function() {
+                        $('#cep').inputmask('99999-999', { "placeholder": " " });
+                    });
+        </script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/style_personal_index.css" rel="stylesheet" />
         <style>
@@ -95,6 +105,7 @@
                 $row = $resultdadosaluno->fetch_assoc();
                 $alunoName = $row['nome'];
                 $cep = $row['CEP'];
+                $telefone = $row['telefone'];
             }
 
 
@@ -111,11 +122,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_aluno.php">Alunos</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_aluno.php">Inicio</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_aluno.php">Sobre Nós</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index_aluno.php">Nos Contate</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="atualiza_aluno.php">Atualizar dados</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout.php">Sair</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="logout_aluno.php">Sair</a></li>
                     </ul>
                 </div>
             </div>
@@ -147,6 +158,10 @@
                     <div class="form-group">
                         <label class="label-form" for="cep">CEP:</label>
                         <input type="text" name="cep" id="cep" value="<?php echo $cep; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="telefone">Telefone:</label>
+                        <input type="tel" class="form-control" name="telefone" id="telefone" value="<?php echo $telefone; ?>">
                     </div>
                     <div class="form-group">
                         <button type="submit" value="Alterar" class="btn btn-success">Atualizar</button>

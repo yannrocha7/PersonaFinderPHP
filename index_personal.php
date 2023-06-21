@@ -44,7 +44,7 @@
             }
 
             // Prepare and execute the query to retrieve the personal's name based on their email
-            $sql = "SELECT nome FROM personal WHERE cpf = '$cpf'";
+            $sql = "SELECT * FROM personal WHERE cpf = '$cpf'";
             $sqlcontratacao = "SELECT * FROM personal_aluno_contratacao WHERE personal_cpf = '$cpf' AND proposta_aceita = 1";
             $sqlproposta = "SELECT * FROM personal_aluno_contratacao WHERE personal_cpf = '$cpf' AND proposta_aceita = 0";
             $result = $conn->query($sql);
@@ -57,6 +57,7 @@
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $personalName = $row["nome"];
+                $medianota = $row["media_nota"];
             }
 
             if ($resultcontratacao && $resultcontratacao->num_rows > 0) {
@@ -119,6 +120,13 @@
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
                 <!-- Portfolio Section Heading-->
+                <?php
+                     if($medianota != -1){
+                 ?>
+                    <h4  class="text-center  mb-0">Sua Nota média: <?php echo $medianota; ?></h4><br/>
+                 <?php 
+                    }
+                  ?>
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Você tem <?php echo $countContatacao; ?> alunos</h2><br>
                 <div class="row justify-content-center">
                     <div class="col-md-3 text-center">
@@ -153,14 +161,14 @@
                 </div>
                 <!-- About Section Content-->
                 <div class="row">
-                    <div class="col-lg-4 ms-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p></div>
-                    <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>
+                    <div class="col-lg-4 ms-auto"><p class="lead">Persona Finder é um site inovador que revoluciona a conexão entre personal trainers e entusiastas de fitness, tornando mais fácil do que nunca encontrar a combinação perfeita. Com capacidades avançadas de pesquisa e recursos aprimorados, o Persona Finder oferece uma plataforma perfeita para profissionais e indivíduos se conectarem, garantindo a melhor experiência de treinamento.</p></div>
+                    <div class="col-lg-4 me-auto"><p class="lead">Descubra a forma definitiva de alcançar seus objetivos de fitness com o Persona Finder. Nossa plataforma permite que você explore uma variedade diversificada de treinadores altamente qualificados, tornando fácil encontrar a pessoa certa para suas necessidades de treinamento. Experimente o poder de se conectar com especialistas dedicados a ajudá-lo a atingir novas alturas.</p></div>
                 </div>
                 <!-- About Section Button-->
                 <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                        <i class="fas fa-download me-2"></i>
-                        Free Download!
+                    <a class="btn btn-xl btn-outline-light"  href="mandar_mensagem.php?telefone=+5531997324575" target="_blank">
+                    <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
+                        Entre em contato para parcerias!
                     </a>
                 </div>
             </div>

@@ -5,6 +5,20 @@
     <link rel="stylesheet" href="style_personal_crud.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script>
+                $(document).ready(function() {
+                    $('#telefone').inputmask('(99) [9]9999-9999', { "placeholder": " " });
+                });
+
+                $(document).ready(function() {
+                    $('#cep').inputmask('99999-999', { "placeholder": " " });
+                });
+                $(document).ready(function() {
+                     $('#cpf').inputmask('999.999.999-99', { "placeholder": " " });
+                });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,6 +68,10 @@
             <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" class="form-control" id="telefone" name="telefone" required>
             </div>
             <div class="form-group">
                 <label for="cep">Tipo de Treino:</label>

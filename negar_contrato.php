@@ -29,6 +29,16 @@
         $cpfAluno = $_GET['cpfAluno'];
         // Faça o que precisar com o valor do cpfPersonal
     }
+    $sqlficha = "SELECT * FROM ficha_treino WHERE aluno_cpf = '$cpfAluno' AND personal_cpf = '$cpf'";
+    $resultficha = $conn->query($sqlficha);
+    $countFicha = mysqli_num_rows($resultficha);
+   
+    // Inserir os dados do aluno no banco de dados
+    $sqlDeleteContrato = "DELETE FROM personal_aluno_contratacao WHERE aluno_cpf = '$cpf'";
+    if ($countFicha > 0){
+        $sqlDeleteficha = "DELETE FROM ficha_treino WHERE aluno_cpf = '$cpf'";
+        $conn->query($sqlDeleteficha);
+    }
 
     // Inserir os dados do aluno no banco de dados
     $sqlDeleteContrato = "DELETE FROM personal_aluno_contratacao WHERE personal_cpf = '$cpf' AND aluno_cpf = '$cpfAluno'";

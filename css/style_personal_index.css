@@ -188,6 +188,10 @@ address {
   line-height: inherit;
 }
 
+.redd {
+  color: red;
+}
+
 ol,
 ul {
   padding-left: 2rem;

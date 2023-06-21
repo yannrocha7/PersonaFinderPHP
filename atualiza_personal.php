@@ -115,6 +115,7 @@
                 $tipo_pagamento = $row['tipo_pagamento'];
                 $valor = $row['valor'];
                 $telefone = $row['telefone'];
+                $descricao = $row['descricao'];
             }
 
 
@@ -183,6 +184,10 @@
                     <div class="form-group">
                         <label class="label-form" for="valor">Valor:</label>
                         <input type="text" name="valor" id="valor" value="<?php echo $valor; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="descricao">Descrição sobre você para os alunos:</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"  id="descricao" name="descricao" placeholder="Digite sobre você" required><?php echo $descricao; ?></textarea>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Alterar" class="btn">

@@ -143,6 +143,7 @@
                             <a href="ver_propostas.php" class="btn btn-primary">Ver Propostas</a>
                         <?php endif; ?>
                     </div>
+                    <a href="acabar_conta_personal.php" class="btn btn-danger" onclick="return confirm('Tem certeza de que deseja encerrar sua conta?')">Encerrar sua Conta</a>
                 </div>
             </div>
         </section>

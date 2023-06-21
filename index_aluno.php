@@ -174,6 +174,7 @@
                         $tipo_pagamentoPersonal = $row["tipo_pagamento"];
                         $valorTreino = $row["valor"];
                         $telefone = $row["telefone"];
+                        $descricao = $row["descricao"];
                         $tipo_pagamentoPersonalAluno = $row["forma_pagamento_aluno"];
                 ?>
                         <!-- Card do Personal Trainer -->
@@ -195,6 +196,7 @@
                                     ?>
                                     <p class="card-text"><?php echo $bairros_treinoPersonal; ?></p>
                                     <p class="card-text">R$<?php echo $valorTreino; ?> por treino</p>
+                                    <h6 class="card-text"><?php echo nl2br($descricao); ?></h6>
                                 </div>
                                 <div class="card-footer">
                                     <a  href="contratar_personal.php?cpfPersonal=<?php echo $cpfPersonal; ?>" class="btn btn-success">Contratar</a>
@@ -287,6 +289,9 @@
                         <?php
                               }
                         ?>
+                        <br/>
+                        <a href="acabar_conta_aluno.php" class="btn btn-danger" onclick="return confirm('Tem certeza de que deseja encerrar sua conta?')">Encerrar sua Conta</a>
+
                 </div>
             </div>
         </section>

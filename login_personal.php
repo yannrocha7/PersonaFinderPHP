@@ -57,6 +57,11 @@
           border-radius: 5px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
+
+      .imagem-pequena {
+      width: 150px; /* Defina a largura desejada */
+      height: auto; /* A altura será ajustada proporcionalmente */
+    }
     .form-group {
       text-align-last: left;
     }
@@ -65,7 +70,7 @@
     }
   </style>
   <div class="container">
-    <h1 class="title">Personal Finder</h1>
+  <img src="assets/img/logo.png" alt="..." class="imagem-pequena">
 </head>
 <body>
   

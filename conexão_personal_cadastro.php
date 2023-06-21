@@ -27,9 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmasenha = $_POST["confirmarSenha"];
     $email = $_POST["email"];
     $telefone = $_POST["telefone"];
+    $descricao = $_POST["descricao"];
 
     // Inserir os dados do aluno no banco de dados
-    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento, valor, forma_pagamento_aluno, telefone) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento', '$valor', '$tipoPagamentoTreino','$telefone')";
+    $sqlPersonal = "INSERT INTO personal (cpf, nome, tipo_treino, bairros_treino, tipo_pagamento, valor, forma_pagamento_aluno, telefone, descricao) VALUES ('$cpf', '$nome', '$tipoTreino', '$bairrosTreino', '$tipoPagamento', '$valor', '$tipoPagamentoTreino','$telefone', '$descricao')";
     if ($conn->query($sqlPersonal) === TRUE) {
         // Obter o CPF gerado automaticamente
         $alunoCpf = $conn->insert_id;

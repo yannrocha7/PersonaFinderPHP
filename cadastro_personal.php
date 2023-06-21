@@ -81,6 +81,7 @@
                 <label for="cep">Bairros que irá dar Aula:</label>
                 <input type="text" class="form-control" id="bairrosTreino" name="bairrosTreino" required>
             </div>
+            
             <div class="form-group">
                 <label for="tipoPagamento">Tipo de Pagamento:</label>
                 <select class="form-control" id="tipoPagamento" name="tipoPagamento" required>
@@ -101,6 +102,11 @@
             <div class="form-group">
                 <label for="email">Valor por treino:</label>
                 <input type="number" class="form-control" id="valor" name="valor" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição sobre você para os alunos:</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"  id="descricao" name="descricao" placeholder="Digite sobre você" required></textarea>
             </div>
 
             <div class="form-group">

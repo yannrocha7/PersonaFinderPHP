@@ -20,10 +20,11 @@ $bairros_treino = $_POST['bairros_treino'];
 $tipo_pagamento = $_POST['tipo_pagamento'];
 $valor = $_POST['valor'];
 $telefone = $_POST['telefone'];
+$descricao = $_POST['descricao'];
 $cpf = $_SESSION["cpf"];
 
 // Query para atualizar os dados na tabela "personal"
-$query = "UPDATE personal SET nome='$nome', tipo_treino='$tipo_treino', bairros_treino='$bairros_treino', tipo_pagamento='$tipo_pagamento', valor='$valor', telefone='$telefone' WHERE cpf='$cpf'";
+$query = "UPDATE personal SET nome='$nome', tipo_treino='$tipo_treino', bairros_treino='$bairros_treino', tipo_pagamento='$tipo_pagamento', valor='$valor', telefone='$telefone', descricao='$descricao' WHERE cpf='$cpf'";
 
 if ($conn->query($query) === TRUE) {
     header("Location: index_personal.php");

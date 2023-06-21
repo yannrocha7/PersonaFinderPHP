@@ -6,10 +6,11 @@
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <style>
    body {
+      font-weight: bold;
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: rgba(26, 188, 156, 1) !important;
-      color: rgba(255, 255, 255);
+      color: #333;
       height: 100%;
       margin: 0;
       display: flex;
@@ -38,6 +39,16 @@
       font-weight: bold;
       color: red;
     }
+
+   form {
+       color: black;
+       max-width: 400px;
+       margin: 0 auto;
+       background-color: #fff;
+       padding: 20px;
+       border-radius: 5px;
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   }
 
     .title{
       font-size: 40px;
@@ -147,6 +158,11 @@
       <div class="row buttons">
         <div class="col">
           <a href="login_personal.php" class="btn btn-secondary btn-block">É Personal? Logue como Personal</a>
+        </div>
+      </div>
+      <div class="row buttons">
+        <div class="col">
+            <a href="esqueci_senha_aluno.php" class="btn btn-success btn-block">Recuperar senha</a>
         </div>
       </div>
     </form>
